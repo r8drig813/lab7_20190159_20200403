@@ -7,6 +7,7 @@ public class jugador {
     private String posicion;
     private String club;
     private int idSeleccion;
+    private String nameSeleccion;
 
     public int getIdJugador() {
         return idJugador;
@@ -54,5 +55,13 @@ public class jugador {
 
     public void setIdSeleccion(int idSeleccion) {
         this.idSeleccion = idSeleccion;
+    }
+
+    public String getNameSeleccion() {
+        return nameSeleccion;
+    }
+
+    public void setNameSeleccion(String nameSeleccion) {
+        this.nameSeleccion = nameSeleccion;
     }
 }
