@@ -17,7 +17,7 @@ public class SeleccionesServlet extends HttpServlet {
 
         switch (action) {
             case "listar":
-                request.setAttribute("lista",seleccionesDao.listaSelecciones());
+                request.setAttribute("lista",seleccionesDao.listarSeleccion());
                 request.getRequestDispatcher("/Selecciones.jsp").forward(request, response);
                 break;
                 /*

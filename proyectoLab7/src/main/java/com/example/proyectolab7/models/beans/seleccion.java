@@ -5,13 +5,13 @@ public class seleccion {
     private int idSeleccion;
     private String nombre;
     private String tecnico;
-    private int estadio_idEstadio;
+    private estadio estadio_idEstadio;
 
-    public int getEstadio_idEstadio() {
+    public estadio getEstadio_idEstadio() {
         return estadio_idEstadio;
     }
 
-    public void setEstadio_idEstadio(int estadio_idEstadio) {
+    public void setEstadio_idEstadio(estadio estadio_idEstadio) {
         this.estadio_idEstadio = estadio_idEstadio;
     }
 

@@ -1,62 +1,74 @@
 <%@ page import="com.example.proyectolab7.models.beans.seleccion" %>
+<%@ page import="com.example.proyectolab7.models.beans.listarSeleccion" %>
+
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    ArrayList<seleccion> lista = (ArrayList<seleccion>) request.getAttribute("lista");
+    ArrayList<listarSeleccion> lista = (ArrayList<listarSeleccion>) request.getAttribute("lista");
 %>
 <html>
 <head>
-    <title>Lista jobs</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>Lista Selecciones</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
           crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <div class="row mt-2 mb-3">
-        <h1 class="col-10">Lista de jobs HR</h1>
-        <div class="col-2">
-            <a class="btn btn-success" href="<%=request.getContextPath()%>/JobServlet?a=crear">Crear trabajo</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-10">
-            <div class="form-floating">
-                <form method="post" action="<%=request.getContextPath()%>/JobServlet?p=b">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" placeholder="Buscador" name="textoBuscar">
-                        <label>Buscador</label>
-                    </div>
-                </form>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Clasificatorias Sudamericanas Mundial 2026</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="#"></a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/JugadoresServlet">Jugadores</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/SeleccionesServlet">Selecciones</a>
             </div>
         </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row mt-2 mb-3">
+        <h1 class="col-10">Lista de Seleccciones</h1>
         <div class="col-2">
-            <a class="btn btn-secondary" href="<%=request.getContextPath()%>/JobServlet">Limpiar</a>
+            <a class="btn btn-success" href="<%=request.getContextPath()%>/JobServlet?a=crear">Registrar Selecciones</a>
         </div>
     </div>
+
 
     <table class="table table-stripped">
         <thead>
         <tr>
-            <th>job title</th>
-            <th>min salary</th>
-            <th>max salary</th>
+            <th>ID</th>
+            <th>Seleccion</th>
+            <th>Tecnico</th>
+            <th>Estadio</th>
+            <th>Primer Partido</th>
         </tr>
         </thead>
         <tbody>
-        <% for (seleccion j : lista) { %>
+        <% for (listarSeleccion j : lista) { %>
         <tr>
             <td><%=j.getIdSeleccion()%>
             </td>
-            <td><%=j.getNombre() %>
+            <td><%=j.getNombrePais() %>
             </td>
             <td><%=j.getTecnico()%>
+            </td>
+            <td><%=j.getNombreEstadio()%>
+            </td>
+            <td><%=j.getPrimerPartido()%>
             </td>
         </tr>
         <% } %>
         </tbody>
     </table>
-    <a href="<%=request.getContextPath()%>/empleados">Ir a lista de empleados</a>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
