@@ -18,8 +18,8 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="#"></a>
-                <a class="nav-link" href="#">Jugadores</a>
-                <a class="nav-link" href="#">Selecciones</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/JugadoresServlet">Jugadores</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/SeleccionesServlet">Selecciones</a>
             </div>
         </div>
     </div>
