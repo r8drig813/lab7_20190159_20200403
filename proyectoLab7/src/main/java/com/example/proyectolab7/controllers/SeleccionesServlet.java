@@ -27,30 +27,34 @@ public class SeleccionesServlet extends HttpServlet {
             case "listar":
 
                 request.setAttribute("lista",seleccionesDao.listarSeleccion());
-                request.getRequestDispatcher("/Selecciones.jsp").forward(request, response);
+                request.getRequestDispatcher("Selecciones.jsp").forward(request, response);
                 break;
             case "agregar":
 
                 request.setAttribute("listaSelecciones",seleccionesDao.listarSeleccion());
                 request.setAttribute("listaEstadios",estadioDao.lista());
-                view = request.getRequestDispatcher("/NuevaSeleccion.jsp");
+                view = request.getRequestDispatcher("NuevaSeleccion.jsp");
                 view.forward(request, response);
                 break;
-                /*
-            case "crear":
-                request.getRequestDispatcher("jobs/nuevo.jsp").forward(request, response);
-                break;
-            case "editar":
-                String id = request.getParameter("id");
-                request.setAttribute("job", jobDao.listar(id));
-                request.getRequestDispatcher("jobs/editar.jsp").forward(request, response);
-                break;
             case "borrar":
-                String id2 = request.getParameter("id");
+                if (request.getParameter("id") != null) {
+                    String seleccionidString = request.getParameter("id");
+                    int idSeleccion = 0;
+                    try {
+                        idSeleccion = Integer.parseInt(seleccionidString);
+                    } catch (NumberFormatException ex) {
+                        response.sendRedirect("SeleccionesServlet");
+                    }
 
-                jobDao.borrar(id2);
-                response.sendRedirect(request.getContextPath() + "/JobServlet");
-                break;*/
+                    seleccion sel = seleccionesDao.obtenerSeleccion(idSeleccion);
+
+                    if (sel != null) {
+                        seleccionesDao.borrarSeleccion(idSeleccion);
+                    }
+                }
+                response.sendRedirect("SeleccionesServlet");
+                break;
+
         }
     }
 
@@ -67,18 +71,6 @@ public class SeleccionesServlet extends HttpServlet {
                 seleccionesDao.guardarSeleccion(seleccion);
                 response.sendRedirect("SeleccionesServlet");
                 break;
-                /*
-            case "a": //actualizar
-                Employee employee1 = parseEmployee(request);
-                employeeDao.actualizar(employee1);
-                response.sendRedirect(request.getContextPath() + "/EmployeeServlet");
-                break;
-            case "b": //buscar
-                String textoBuscar = request.getParameter("textoEnBusqueda");
-                request.setAttribute("lista",employeeDao.buscarPorTitle(textoBuscar));
-                request.getRequestDispatcher("employee/lista.jsp").forward(request,response);
-                break;
-                */
         }
     }
 

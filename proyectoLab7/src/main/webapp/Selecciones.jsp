@@ -46,6 +46,7 @@
             <th>Tecnico</th>
             <th>Estadio</th>
             <th>Primer Partido</th>
+            <th>Borrar</th>
         </tr>
         </thead>
         <tbody>
@@ -60,6 +61,12 @@
             <td><%=j.getNombreEstadio()%>
             </td>
             <td><%=j.getPrimerPartido()%>
+            </td>
+            <td>
+                <a class="btn btn-danger"
+                   href="<%=request.getContextPath()%>/SeleccionesServlet?a=borrar&id=<%=j.getIdSeleccion()%>">
+                    <i class="bi bi-trash3"></i>
+                </a>
             </td>
         </tr>
         <% } %>

@@ -23,8 +23,8 @@ public class SeleccionesDao extends DaoBase{
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                seleccion employee = fetchEmployeeData(rs);
-                lista.add(employee);
+                seleccion seleccion = fetchSeleccionData(rs);
+                lista.add(seleccion);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -69,7 +69,7 @@ public class SeleccionesDao extends DaoBase{
         return lista;
     }
 
-    private seleccion fetchEmployeeData(ResultSet rs) throws SQLException {
+    private seleccion fetchSeleccionData(ResultSet rs) throws SQLException {
         seleccion seleccion = new seleccion();
         seleccion.setIdSeleccion(rs.getInt(1));
         seleccion.setNombre(rs.getString(2));
@@ -83,7 +83,6 @@ public class SeleccionesDao extends DaoBase{
 
         return seleccion;
     }
-
 
     public void guardarSeleccion(seleccion seleccion){
 
@@ -108,4 +107,40 @@ public class SeleccionesDao extends DaoBase{
 
     }
 
+    public void borrarSeleccion(int id) {
+
+        try (Connection conn = getConection();
+             PreparedStatement pstmt = conn.prepareStatement("DELETE FROM seleccion WHERE idSeleccion = ?")) {
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public seleccion obtenerSeleccion(int idSeleccion) {
+
+        seleccion seleccion = null;
+
+        String sql = "select * from seleccion s \n" +
+                "inner join estadio e on s.estadio_idEstadio = e.idEstadio;";
+        try (Connection conn = getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idSeleccion);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                if (rs.next()) {
+                    seleccion = fetchSeleccionData(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return seleccion;
+    }
 }
