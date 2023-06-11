@@ -23,6 +23,7 @@ public class JugadoresServlet extends HttpServlet {
                 request.getRequestDispatcher("/Jugadores.jsp").forward(request, response);
                 break;
             case "crear":
+                request.setAttribute("listaSelecciones", jugadoresDao.listaSelecciones());
                 request.getRequestDispatcher("/NuevoJugador.jsp").forward(request, response);
                 break;
         }/*
@@ -57,12 +58,12 @@ public class JugadoresServlet extends HttpServlet {
         JugadoresDao jugadoresDao = new JugadoresDao();
         switch (action){
             case "crear":
+                jugador jugador = parseJugador(request);
                 try{
-                    jugador jugador = parseJugador(request);
                     jugadoresDao.guardarJugador(jugador);
                     response.sendRedirect(request.getContextPath() + "/JugadoresServlet");
                 }catch (SQLException ex){
-
+                    System.out.println("Existe un error");
                 }
                 break;
                 /*
@@ -82,22 +83,30 @@ public class JugadoresServlet extends HttpServlet {
 
     public jugador parseJugador(HttpServletRequest request){
         jugador jugador = new jugador();
+        JugadoresDao jugadoresDao = new JugadoresDao();
         String name = request.getParameter("name");
         String edad = request.getParameter("edad");
         String posicion = request.getParameter("posicion");
         String club = request.getParameter("club");
         String seleccion = request.getParameter("seleccion");
 
-        try{
-            jugador.setNameSeleccion(name);
+        if (name.isEmpty() || edad.isEmpty() || posicion.isEmpty() || club.isEmpty() || seleccion.isEmpty()) {
+            // Hay algun casillero vacio
+        }
+        try {
+            jugador.setNombre(name);
             jugador.setEdad(Integer.parseInt(edad));
             jugador.setPosicion(posicion);
             jugador.setClub(club);
             jugador.setIdSeleccion(Integer.parseInt(seleccion));
-            return jugador;
-        }catch (NumberFormatException e){
-
+        } catch (NumberFormatException e) {
+            //Se valida el parseo
         }
-        return  jugador;
+        // Validar que el nombre del jugador no se repita en una misma selección
+        if (jugadoresDao.jugadorRepetidoEnSeleccion(jugador.getNombre(), jugador.getIdSeleccion())) {
+            // El nombre del jugador ya existe en esta selección
+        }
+        return jugador;
+
     }
 }
